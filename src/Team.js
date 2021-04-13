@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Team({ Agenre, Bgenre, Cgenre }) {
   const candidates = ['1 ', '2 ', '3 ', '4 ', '5 ', '6 ', '7 ', '8 ', '9 '];
@@ -23,6 +23,12 @@ function Team({ Agenre, Bgenre, Cgenre }) {
   const { oldA, oldB, oldC } = oldTeam;
   const { oldTeamArray } = oldCandidate;
   const { text } = state;
+  useEffect(() => {
+    console.log(text, oldA, oldB, oldC);
+    if (text === '중복발생') {
+      onClick();
+    }
+  }, [text]);
 
   const shuffle = (array) => {
     var currentIndex = array.length,
@@ -107,16 +113,15 @@ function Team({ Agenre, Bgenre, Cgenre }) {
   return (
     <>
       <div>
-        Value: {text}
         <br />
         <br />
-        {Agenre}팀: 임원A , {teamA} 전시즌 팀: {oldA}
+        {Agenre}팀: 임원A , {teamA} 전시즌 팀: {oldA.join(', ')}
         <br />
         <br />
-        {Bgenre}팀: 임원B , {teamB} 전시즌 팀: {oldB}
+        {Bgenre}팀: 임원B , {teamB} 전시즌 팀: {oldB.join(', ')}
         <br />
         <br />
-        {Cgenre}팀: 임원C , {teamC} 전시즘 팀: {oldC}
+        {Cgenre}팀: 임원C , {teamC} 전시즌 팀: {oldC.join(', ')}
       </div>
       <button onClick={onClick}>Mix</button>
     </>
