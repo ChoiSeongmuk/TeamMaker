@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Team({ Agenre, Bgenre, Cgenre }) {
-  const candidates = ['1 ', '2 ', '3 ', '4 ', '5 ', '6 ', '7 ', '8 ', '9 '];
-
+function Team({ Agenre, Bgenre, Cgenre, candidates }) {
   const [team, setTeam] = useState({
     teamA: [],
     teamB: [],
@@ -13,9 +11,7 @@ function Team({ Agenre, Bgenre, Cgenre }) {
     oldB: [],
     oldC: [],
   });
-  const [state, setState] = useState({
-    text: null,
-  });
+
   const [oldCandidate, setOldCandidate] = useState({
     oldTeamArray: [],
   });
@@ -23,14 +19,6 @@ function Team({ Agenre, Bgenre, Cgenre }) {
   const { oldA, oldB, oldC } = oldTeam;
   const { teamA, teamB, teamC } = team;
   const { oldTeamArray } = oldCandidate;
-  const { text } = state;
-  useEffect(() => {
-    console.log(text, oldA, oldB, oldC);
-    if (text === '중복발생') {
-      onClick();
-    }
-    /* eslint-disable-next-line */
-  }, [text]);
 
   const shuffle = (array) => {
     var currentIndex = array.length,
@@ -71,61 +59,56 @@ function Team({ Agenre, Bgenre, Cgenre }) {
 
     return rst;
   };
-
   const onClick = () => {
-    const newCandidates = shuffle(candidates);
-    const candiArray = newCandidates.slice();
-    const teamA = newCandidates.splice(0, 3);
-    const teamAlpha = teamA.join(', ');
-    const teamB = newCandidates.splice(0, 3);
-    const teamBeta = teamB.join(', ');
-    const teamC = newCandidates.splice(0, 3);
-    const teamChallie = teamC.join(', ');
-    setOldCandidate({
-      oldTeamArray: candiArray,
-    });
-    setTeam({
-      teamA: teamAlpha,
-      teamB: teamBeta,
-      teamC: teamChallie,
-    });
-    const oldA = oldTeamArray.splice(0, 3);
-    const oldB = oldTeamArray.splice(0, 3);
-    const oldC = oldTeamArray.splice(0, 3);
-    setOldTeam({
-      oldA: oldA,
-      oldB: oldB,
-      oldC: oldC,
-    });
-    const valueA = compareArray(oldA, teamA);
-    const valueB = compareArray(oldB, teamB);
-    const valueC = compareArray(oldC, teamC);
+    const newCandi = candidates.slice();
+    if (newCandi.length === 9) {
+      const shuffled = shuffle(newCandi);
+      const shuffledArray = shuffled.slice();
+      setOldCandidate({
+        oldTeamArray: shuffledArray,
+      });
+      setTeam({
+        teamA: shuffled.splice(0, 3),
+        teamB: shuffled.splice(0, 3),
+        teamC: shuffled.splice(0, 3),
+      });
 
-    if (valueA || valueB || valueC) {
-      setState({ text: '중복발생' });
-      console.log(oldA, oldB, oldC);
-      console.log('중복발생');
+      setOldTeam({
+        oldA: oldTeamArray.splice(0, 3),
+        oldB: oldTeamArray.splice(0, 3),
+        oldC: oldTeamArray.splice(0, 3),
+      });
     } else {
-      setState({ text: 'ㄱㅊ' });
-      console.log(oldA, oldB, oldC);
-      console.log('ㄱㅊ');
+      alert('9명을 입력하세요.');
     }
   };
+
+  useEffect(() => {
+    const conditionA = compareArray(oldA, teamA);
+    const conditionB = compareArray(oldB, teamB);
+    const conditionC = compareArray(oldC, teamC);
+    if (conditionA || conditionB || conditionC) {
+      console.log('mixed again');
+      onClick();
+    }
+    /* eslint-disable-next-line */
+  }, [teamA, oldA]);
 
   return (
     <>
       <div>
         <br />
         <br />
-        {Agenre}팀: 임원A , {teamA} 전시즌 {Agenre}팀: 임원A , {oldA.join(', ')}
+        {Agenre}팀: 임원A , {teamA.join(', ')}
         <br />
         <br />
-        {Bgenre}팀: 임원B , {teamB} 전시즌 {Bgenre}팀: 임원B , {oldB.join(', ')}
+        {Bgenre}팀: 임원B , {teamB.join(', ')}
         <br />
         <br />
-        {Cgenre}팀: 임원C , {teamC} 전시즌 {Cgenre}팀: 임원C , {oldC.join(', ')}
+        {Cgenre}팀: 임원C , {teamC.join(', ')}
       </div>
-      <button onClick={onClick}>Mix</button>
+      <br />
+      <button onClick={onClick}>다음시즌</button>
     </>
   );
 }
