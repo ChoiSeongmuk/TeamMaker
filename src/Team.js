@@ -19,8 +19,9 @@ function Team({ Agenre, Bgenre, Cgenre }) {
   const [oldCandidate, setOldCandidate] = useState({
     oldTeamArray: [],
   });
-  const { teamA, teamB, teamC } = team;
+
   const { oldA, oldB, oldC } = oldTeam;
+  const { teamA, teamB, teamC } = team;
   const { oldTeamArray } = oldCandidate;
   const { text } = state;
   useEffect(() => {
@@ -28,6 +29,7 @@ function Team({ Agenre, Bgenre, Cgenre }) {
     if (text === '중복발생') {
       onClick();
     }
+    /* eslint-disable-next-line */
   }, [text]);
 
   const shuffle = (array) => {
@@ -115,13 +117,13 @@ function Team({ Agenre, Bgenre, Cgenre }) {
       <div>
         <br />
         <br />
-        {Agenre}팀: 임원A , {teamA} 전시즌 팀: {oldA.join(', ')}
+        {Agenre}팀: 임원A , {teamA} 전시즌 {Agenre}팀: 임원A , {oldA.join(', ')}
         <br />
         <br />
-        {Bgenre}팀: 임원B , {teamB} 전시즌 팀: {oldB.join(', ')}
+        {Bgenre}팀: 임원B , {teamB} 전시즌 {Bgenre}팀: 임원B , {oldB.join(', ')}
         <br />
         <br />
-        {Cgenre}팀: 임원C , {teamC} 전시즌 팀: {oldC.join(', ')}
+        {Cgenre}팀: 임원C , {teamC} 전시즌 {Cgenre}팀: 임원C , {oldC.join(', ')}
       </div>
       <button onClick={onClick}>Mix</button>
     </>
