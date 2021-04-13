@@ -109,6 +109,7 @@ function Team({ Agenre, Bgenre, Cgenre, candidates }) {
       </div>
       <br />
       <button onClick={onClick}>다음시즌</button>
+      <br />
     </>
   );
 }
