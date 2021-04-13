@@ -26,12 +26,12 @@ function App() {
     }
   };
   const saveButton = () => {
-    if (users.length < 9) {
+    if (users.length < 9 && userInput) {
       const user = userInput;
       setUsers([...users, user]);
       setUserInput('');
     } else {
-      alert('회원수가 너무많아..');
+      alert('회원수가 이상해..');
     }
   };
   return (
